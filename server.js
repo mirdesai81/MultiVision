@@ -2,7 +2,7 @@ var express = require('express'),
     path = require('path'),
     passport = require('passport'),
     mongoose = require('mongoose'),
-    localStratety = require('passport-local').Strategy;
+    localStrategy = require('passport-local').Strategy;
 
 /*var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');*/
@@ -20,7 +20,7 @@ require('./server/config/mongoose')(config);
 var User = mongoose.model('User');
 
 
-passport.use(new localStratety(
+passport.use(new localStrategy(
    function(username,password,done){
      User.findOne({userName:username}).exec(function(err,user){
         if(user){
@@ -34,7 +34,7 @@ passport.use(new localStratety(
 
 passport.serializeUser(function(user,done){
     if(user) {
-        done(null, user._is);
+        done(null, user._id);
     }
 });
 
