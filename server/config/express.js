@@ -4,7 +4,7 @@ var express = require('express'),
     bodyParser = require('body-parser'),
     passport = require('passport'),
     cookieParser = require("cookie-parser"),
-    expressSession = require('express-session');
+    expressSession = require('express-session'),
     path = require('path');
 
 module.exports = function(app, config){
