@@ -14,7 +14,7 @@ angular.module('app').factory('mvAuth',function($http,mvIdentity,$q,mvUser){
               }else{
                   dfd.resolve(false);
               }
-          })
+          });
           return dfd.promise;
       },
       logoutUser:function(){
@@ -31,6 +31,20 @@ angular.module('app').factory('mvAuth',function($http,mvIdentity,$q,mvUser){
           } else {
               return $q.reject('not authorized');
           }
-      }
+      },
+        createUser : function(user){
+            var dfd = $q.defer();
+            var newUser = new mvUser(user);
+
+            newUser.$save().then(function(){
+                mvIdentity.currentUser = newUser;
+                dfd.resolve();
+            },function(response){
+                dfd.reject(response.data.reason);
+            });
+
+            return dfd.promise;
+        }
     }
+
 });
