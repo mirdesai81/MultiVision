@@ -33,3 +33,28 @@ exports.createUser = function(req,res,next){
     })
 
 };
+
+exports.updateUser = function(req,res){
+     var userUpdates = req.body;
+    if(req.user._id != userUpdates._id && !req.user.hasRole('admin')) {
+        res.status(403);
+        return res.end();
+    }
+
+    req.user.firstName = userUpdates.firstName;
+    req.user.lastName = userUpdates.lastName;
+    req.user.username = userUpdates.userName;
+
+    if(userUpdates.password && userUpdates.password.length > 0) {
+        req.user.salt = encryption.createSalt();
+        req.user.hashed_pwd = encryption.hashpwd(req.user.salt , userUpdates.password);
+    }
+
+    req.user.save(function(err){
+        if(err) {
+            res.status(400);
+            return res.send({reason:err.toString()});
+        }
+        res.send(req.user);
+    });
+};

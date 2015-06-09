@@ -11,6 +11,8 @@ module.exports = function(app){
 
     app.post('/api/users',user.createUser);
 
+    app.put('/api/users',user.updateUser);
+
     app.get("/partials/*", function(req, res){
         console.log(req.params[0]);
         res.render('../../public/app/'+req.params[0]);

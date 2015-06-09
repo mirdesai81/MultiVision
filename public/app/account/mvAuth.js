@@ -32,12 +32,34 @@ angular.module('app').factory('mvAuth',function($http,mvIdentity,$q,mvUser){
               return $q.reject('not authorized');
           }
       },
+        authorizeAuthenticatedUserForRoute:function(role){
+            if(mvIdentity.isAuthenticated()) {
+                return true;
+            } else {
+                return $q.reject('not authorized');
+            }
+        },
         createUser : function(user){
             var dfd = $q.defer();
             var newUser = new mvUser(user);
 
             newUser.$save().then(function(){
                 mvIdentity.currentUser = newUser;
+                dfd.resolve();
+            },function(response){
+                dfd.reject(response.data.reason);
+            });
+
+            return dfd.promise;
+        },
+        updateCurrentUser : function(user) {
+            var dfd = $q.defer();
+            var clone = angular.copy(mvIdentity.currentUser);
+            angular.extend(clone,user);
+
+
+            clone.$update().then(function(){
+                mvIdentity.currentUser = clone;
                 dfd.resolve();
             },function(response){
                 dfd.reject(response.data.reason);
