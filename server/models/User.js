@@ -47,6 +47,6 @@ function createDefaultUsers() {
         }
 
     })
-};
+}
 
 exports.createDefaultUser = createDefaultUsers;
