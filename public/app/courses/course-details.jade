@@ -1,0 +1,13 @@
+//
+   Created by Mihir.Desai on 6/11/2015.
+.container
+   h1 {{course.title}}
+   .row
+      .col-md-6
+         h3(ng-show="course.featured") Featured
+         h3 Published on {{course.published | date}}
+      .col-md-6
+         .panel.panel-primary.margin-top-med
+            .panel-heading Tags
+            .panel-body
+               div(ng-repeat="tag in course.tags") {{tag}}

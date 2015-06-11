@@ -15,6 +15,8 @@ module.exports = function(app){
     //Courses Routes
     app.get("/api/courses",courses.getCourses);
 
+    app.get("/api/courses/:id",courses.getCoursesById);
+
     app.get("/partials/*", function(req, res){
         console.log(req.params[0]);
         res.render('../../public/app/'+req.params[0]);
